@@ -1,0 +1,5 @@
+package com.cg.attendance.repositories;
+
+public interface AttendanceDetailsRepository {
+
+}

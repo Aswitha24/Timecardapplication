@@ -1,0 +1,16 @@
+package com.cg.attendance.repositories;
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.cg.attendance.domain.Employee;
+
+
+public interface EmployeeRepository extends CrudRepository<Employee,Long> {
+	
+	public Employee findEmployeeById(long empId);
+	public void addEmployee(Employee employee);
+	public List<Employee> findEmployeesUnderSupervisior(long supervisiorId);
+
+}
