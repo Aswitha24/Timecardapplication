@@ -1,0 +1,5 @@
+package com.cg.attendance.exception;
+
+public class AttendanceIDException {
+
+}

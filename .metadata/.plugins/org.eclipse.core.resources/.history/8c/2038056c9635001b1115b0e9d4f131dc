@@ -1,0 +1,13 @@
+package com.cg.attendance.repositories;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import com.cg.attendance.domain.AttendanceDetail;
+
+@Repository
+public interface AttendanceDetailRepository extends CrudRepository<AttendanceDetail,Integer>{
+	public AttendanceDetail findAttendanceDetailsById(int attendanceId);
+	
+
+}
