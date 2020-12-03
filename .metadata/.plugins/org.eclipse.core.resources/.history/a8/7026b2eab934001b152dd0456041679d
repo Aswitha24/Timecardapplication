@@ -1,0 +1,10 @@
+package com.cg.attendance.services;
+
+import java.util.Arrays;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class AttendanceDetailsService {
+	private List<AttendanceDetails> attendanceDetails =Arrays.asList()
+}

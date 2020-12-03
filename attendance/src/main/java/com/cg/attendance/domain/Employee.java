@@ -35,6 +35,23 @@ public class Employee {
 	//Employee details has one to many relationship with Attendance Detail entity using empId
 	@OneToMany(mappedBy = "employee")
 	private List<AttendanceDetails> attendance = new ArrayList<>();
+	
+	public Employee( ) {
+			super();
+		}
+	
+
+	public Employee( long empId,String empName,String phoneNumber,String empEmail,String empLocation,
+		 long supervisiorId) {
+		super();
+		this.empId = empId;
+		this.empName = empName;
+		this.phoneNumber = phoneNumber;
+		this.empEmail = empEmail;
+		this.empLocation = empLocation;
+		this.supervisiorId = supervisiorId;
+		
+	}
 
 	//setters and getters for Employee to access outside this class
 	public long getEmpId() {

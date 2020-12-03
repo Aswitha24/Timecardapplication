@@ -1,5 +1,7 @@
 package com.cg.attendance.domain;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,11 +24,11 @@ public class AttendanceDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//Creates  auto generated values for attendanceId
 	private int attendanceId;
 	@JsonFormat(pattern = "HH:MM")
-	private String inTime;
+	private Date inTime;
 	@JsonFormat(pattern = "HH:MM")
-	private String outTime;
-	@JsonFormat(pattern = "DD:MM:YYYY")
-	private String date;
+	private Date outTime;
+	@JsonFormat(pattern = "YYYY-MM-DD")
+	private Date date;
 	@NotNull(message="Reason is required")
 	private String reason;
 	@NotNull(message="Type Id is required")
@@ -39,6 +41,7 @@ public class AttendanceDetails {
 	@JoinColumn(name = "empId")
 	private Employee employee;
 	
+	
     //setters and getters for Attendance details to access outside this class
 	public int getAttendanceId() {
 		return attendanceId;
@@ -48,27 +51,27 @@ public class AttendanceDetails {
 		this.attendanceId = attendanceId;
 	}
 
-	public String getInTime() {
+	public Date getInTime() {
 		return inTime;
 	}
 
-	public void setInTime(String inTime) {
+	public void setInTime(Date inTime) {
 		this.inTime = inTime;
 	}
 
-	public String getOutTime() {
+	public Date getOutTime() {
 		return outTime;
 	}
 
-	public void setOutTime(String outTime) {
+	public void setOutTime(Date outTime) {
 		this.outTime = outTime;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
