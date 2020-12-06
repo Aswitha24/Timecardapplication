@@ -2,17 +2,18 @@ package com.cg.attendance.exception;
 
 public class AttendanceIdExceptionResponse {
 
-	private Long attendanceId;
-
-	public AttendanceIdExceptionResponse(String message) {
+	private String attendanceId;
+	
+	public AttendanceIdExceptionResponse(String attendanceId) {
 		super();
+		this.attendanceId=attendanceId;
 	}
 
-	public Long getAttendanceId() {
+	public String getAttendanceId() {
 		return attendanceId;
 	}
 
-	public void setAttendanceId(String projectIdentifier) {
+	public void setAttendanceId(String attendanceId) {
 		this.attendanceId = attendanceId;
 	}
 

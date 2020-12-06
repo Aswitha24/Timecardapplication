@@ -1,57 +1,58 @@
 package com.cg.attendance.services;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cg.attendance.domain.AttendanceDetail;
+import com.cg.attendance.entities.AttendanceDetail;
 import com.cg.attendance.exception.AttendanceIDException;
 import com.cg.attendance.repositories.AttendanceDetailRepository;
 
 @Service
 public class AttendanceDetailService implements IAttendanceDetailService {
+	@Autowired
 	private AttendanceDetailRepository attendanceRepo;
 
 	@Override
-	public void addAttendanceDetail(AttendanceDetail attendance) {
-		attendanceRepo.save(attendance);
-
-	}
-
-	@Override
-	public AttendanceDetail updateAttendanceStatus(Long attendanceId, String status) {
-		AttendanceDetail newAttendance= null;
+	public AttendanceDetail addAttendanceDetail(AttendanceDetail attendance) {
 		try {
-		    newAttendance = attendanceRepo.findByAttendanceId(attendanceId);
-			if(newAttendance.getStatus().equalsIgnoreCase("pending"))
-		               newAttendance.setStatus(status);
-			if (newAttendance == null) {
-				throw new AttendanceIDException("No attendance with attendance id " + attendanceId + " exist");
-				}	
-		} catch (Exception ex) {
-			
-			System.out.println(ex);			
+		attendance.setAttendanceId(attendance.getAttendanceId());		
+		return attendanceRepo.save(attendance);
+		}catch(Exception ex)
+		{
+			throw new AttendanceIDException("attendance id "+attendance.getAttendanceId()+" is already present");
 		}
-		return attendanceRepo.save(newAttendance);
+
 	}
 
 	@Override
-	public void setAttendanceType(int choice, AttendanceDetail attendance) {
-		switch (choice) {
-		case 1:
-			attendance.setTypeId("Forgot Card");
-			break;
-		case 2:
-			attendance.setTypeId("Client Location");
-			break;
-		case 3:
-			attendance.setTypeId("Working From Home");
-			break;
-		case 4:
-			attendance.setTypeId("Business Travel");
-			break;
-		default:
-			attendance.setTypeId("Missed Both Swipes");
+	public AttendanceDetail updateAttendanceStatus(String attendanceId, AttendanceDetail attendance) {
+				AttendanceDetail newAttendance = attendanceRepo.findByAttendanceId(attendanceId);
+				if(newAttendance==null)
+				{   
+					 
+					throw new AttendanceIDException("No attendance is added for attendance id "+attendanceId);
+				}
+			     if(newAttendance.getStatus().equalsIgnoreCase("pending"))
+				 {
+			     newAttendance.setStatus(attendance.getStatus());
+				 } 
+				 else
+				 {
+					 newAttendance.setStatus(newAttendance.getStatus());
+				 }
+			     return attendanceRepo.save(newAttendance);
+			    
+	  }
 
+	@Override
+	public AttendanceDetail viewAttendanceByAttendanceId(String attendanceId) {
+		AttendanceDetail newAttendance=attendanceRepo.findByAttendanceId(attendanceId);
+		if(newAttendance==null)
+		{
+			throw new AttendanceIDException("No attendance is added for attendance id "+attendanceId);
 		}
+		return newAttendance;
 	}
 
 }

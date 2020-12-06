@@ -1,0 +1,39 @@
+package com.cg.attendance.controllers;
+
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+
+import com.cg.attendance.entities.Employee;
+import com.cg.attendance.services.EmployeeService;
+
+public class EmployeeControllerTest {
+	
+	@Autowired
+	MockMvc mockMvc;
+	
+	@MockBean
+	EmployeeService employeeService;
+	
+	@Test
+	void test_getEmployeeByEmpId() throws Exception{
+		
+		BDDMockito.given(employeeService.viewEmployeeByEmpId(Mockito.anyString())).willReturn(new Employee("46045146","Aswitha","7032127711","aswi123@gmail.com","Banglore","4321234"));
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/attendanceapplication/empid"))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("name").value("Aswitha"))
+		.andExpect(jsonPath("empId").value("46045146"));
+		
+
+}
+	
+}
+

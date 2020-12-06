@@ -1,0 +1,50 @@
+package com.cg.attendance.controllers;
+
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import com.cg.attendance.entities.Employee;
+import com.cg.attendance.exception.EmployeeNotFoundException;
+import com.cg.attendance.services.EmployeeService;
+
+public class EmployeeControllerTest {
+	
+	@Autowired
+	MockMvc mockMvc;
+	
+	@MockBean
+	EmployeeService employeeService;
+	
+	@Test
+	void test_getEmployeeDetailByEmpId() throws Exception{
+		
+		BDDMockito.given(employeeService.findEmployeeByEmpId(Mockito.anyString())).willReturn(new Employee("46045146","Aswitha","7032127711","aswi123@gmail.com","Banglore","4321234"));
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/attendanceapplication/empid"))
+		.andExpect(status().isOk())
+		.andExpect((ResultMatcher) jsonPath("name").value("Aswitha"))
+		.andExpect((ResultMatcher) jsonPath("empId").value("46045146"));
+		
+
+}
+	@Test
+	void test_getEmployeeDetail_ThrowEmployeeNotFoundException() throws Exception{
+		
+		BDDMockito.given(employeeService.viewEmployeeByEmpId(Mockito.anyString())).willThrow(new EmployeeNotFoundException());
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/projects/fp01"))
+		.andExpect(status().isNotFound());
+		
+	}
+	
+}
+

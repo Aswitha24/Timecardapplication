@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.cg.attendance.domain.Employee;
+
+import com.cg.attendance.entities.Employee;
 /**
  * This a Employee repository that performs all the crud operation on employee details
  * @author Suparna Arya & Aswitha 
@@ -16,9 +17,10 @@ import com.cg.attendance.domain.Employee;
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
 	
-// TODO ALL THE CRUD OPERATIONS ON EMPLOYEE BEAN
-
-	Employee findByEmpId(long empId);
+    Employee findByEmpId(String empId);
+    
     @Query("SELECT a FROM employees a where a.supervisiorId =:supervisiorId ")
-	List<Employee> findEmployeesUnderSupervisior(@Param("supervisiorId") long supervisiorId);
+	List<Employee> findEmployeesUnderSupervisior(@Param("supervisiorId") String supervisiorId);
+
+	Employee GetEmployeeById(int empId);
 }
